@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.danielqueiroz.mongodb.domain.Post;
 import com.danielqueiroz.mongodb.domain.User;
+import com.danielqueiroz.mongodb.dto.AuthorDTO;
 import com.danielqueiroz.mongodb.repository.PostRepository;
 import com.danielqueiroz.mongodb.repository.UserRepository;
 
@@ -34,13 +35,14 @@ public class Instantiation implements CommandLineRunner{
 		SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy");
 		simpleDate.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
+		userRepository.save(Arrays.asList(maria,jose,daniel));
+
 		Post post1 = new Post(null, simpleDate.parse("21/03/2018"), 
-				"Partiu Viajem", "Primeira viagem para São Paulo",maria);
+				"Partiu Viajem", "Primeira viagem para São Paulo", new AuthorDTO(maria));
 		
 		Post post2 = new Post(null, simpleDate.parse("22/03/2018"), 
-				"#Cheguei", "Vejo que irei me divertir muito aqui!",maria);
+				"#Cheguei", "Vejo que irei me divertir muito aqui!",new AuthorDTO(maria));
 		
-		userRepository.save(Arrays.asList(maria,jose,daniel));
 		postRepository.save(Arrays.asList(post1,post2));
 		
 	}
