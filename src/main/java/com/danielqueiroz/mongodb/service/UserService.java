@@ -32,14 +32,26 @@ public class UserService {
 	public User insert(User user) {
 		return userRepository.insert(user);
 	}
-	
-	public User fromDTO(UserDTO userDto) {
-		return new User(userDto.getId(), userDto.getName(), userDto.getEmail());
-	}
 
 	public void delete(String id) {
 		findById(id);
 		userRepository.delete(id);
+	}
+	
+	public User update(User user) {
+		User newUser = userRepository.findOne(user.getId());
+		updateData(newUser, user);
+		return userRepository.save(newUser);
+		
+	}
+	
+	private void updateData(User newUser, User user) {
+		newUser.setName(user.getName());
+		newUser.setEmail(user.getEmail());
+	}
+
+	public User fromDTO(UserDTO userDto) {
+		return new User(userDto.getId(), userDto.getName(), userDto.getEmail());
 	}
 	
 }
